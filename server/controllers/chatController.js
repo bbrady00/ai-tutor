@@ -69,3 +69,70 @@ export const chatWithTutor = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+export const generatePractice = async (req, res) => {
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `
+You are a German tutor.
+
+Give a simple English sentence for the user to translate into German.
+
+Keep it beginner friendly.
+
+Return ONLY the sentence.
+`,
+        },
+      ],
+    });
+
+    res.json({
+      prompt: response.choices[0].message.content,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to generate practice" });
+  }
+};
+
+export const evaluatePractice = async (req, res) => {
+  try {
+    const { userAnswer, originalSentence } = req.body;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `
+You are a German tutor.
+
+The user was asked to translate:
+"${originalSentence}"
+
+Evaluate their answer.
+
+Return EXACTLY:
+
+Correct: <correct version>
+Explanation: <short explanation>
+Score: <correct or incorrect>
+`,
+        },
+        {
+          role: "user",
+          content: userAnswer,
+        },
+      ],
+    });
+
+    res.json({
+      feedback: response.choices[0].message.content,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Evaluation failed" });
+  }
+};
