@@ -1,0 +1,44 @@
+.practice-page {
+  gap: 20px;
+}
+
+.practice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.practice-start-button,
+.practice-submit-button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--bg);
+}
+
+.practice-card {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--social-bg);
+}
+
+.practice-input-container {
+  display: flex;
+  gap: 8px;
+}
+
+.practice-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.practice-feedback {
+  padding: 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-bg);
+  border-radius: 6px;
+}

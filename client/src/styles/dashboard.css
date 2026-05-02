@@ -1,0 +1,30 @@
+.dashboard-page {
+  gap: 16px;
+}
+
+.dashboard-header {
+  text-align: left;
+}
+
+.dashboard-weaknesses {
+  text-align: left;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--social-bg);
+}
+
+.dashboard-weakness-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.dashboard-weakness-item {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-weakness-item:last-child {
+  border-bottom: none;
+}

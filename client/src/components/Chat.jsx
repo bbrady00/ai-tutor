@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/chat.css";
 
 const Chat = () => {
   const [input, setInput] = useState("");
@@ -49,16 +50,16 @@ const Chat = () => {
   };
 
   return (
-    <>
-      <div>
+    <div className="page chat-page">
+      <div className="chat-messages">
         {messages.map((msg, index) => (
-          <div key={index}>
+          <div className={`chat-message ${msg.role}`} key={index}>
             {msg.role === "user" ? (
               <p>
                 <strong>You:</strong> {msg.content}
               </p>
             ) : (
-              <div>
+              <div className="chat-response">
                 <p>
                   <strong>Correct:</strong> {msg.correct}
                 </p>
@@ -72,14 +73,28 @@ const Chat = () => {
             )}
           </div>
         ))}
-        <div>{loading && <p>Thinking...</p>}</div>
+        {loading && (
+          <div className="chat-message ai chat-loading">
+            <p>Thinking...</p>
+          </div>
+        )}
       </div>
 
-      <input value={input} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={sendMessage} disabled={loading}>
-        {loading ? "..." : "Send"}
-      </button>
-    </>
+      <div className="chat-input-container">
+        <input
+          className="chat-input"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button
+          className="chat-button"
+          onClick={sendMessage}
+          disabled={loading}
+        >
+          {loading ? "..." : "Send"}
+        </button>
+      </div>
+    </div>
   );
 };
 

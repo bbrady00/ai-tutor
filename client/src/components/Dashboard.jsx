@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../styles/practice.css";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -12,15 +13,20 @@ const Dashboard = () => {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h2>Your Progress</h2>
-
-      <h3>Weaknesses</h3>
-      <ul>
-        {user.weaknesess.map((w, i) => (
-          <li key={i}>{w}</li>
-        ))}
-      </ul>
+    <div className="page dashboard-page">
+      <div className="dashboard-header">
+        <h2>Your Progress</h2>
+      </div>
+      <div className="dashboard-weaknesses">
+        <h3>Weaknesses</h3>
+        <ul className="dashboard-weakness-list">
+          {user.weaknesses.map((w, i) => (
+            <li className="dashboard-weakness-item" key={i}>
+              {w}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

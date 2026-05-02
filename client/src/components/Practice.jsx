@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/practice.css";
 
 const Practice = () => {
   const [practicePrompt, setPracticePrompt] = useState("");
@@ -41,23 +42,42 @@ const Practice = () => {
   };
 
   return (
-    <div>
-      <h2>Practice Mode</h2>
+    <div className="page practice-page">
+      <div className="practice-header">
+        <h2>Practice Mode</h2>
+        <button className="practice-start-button" onClick={startPractice}>
+          Start / New Question
+        </button>
+      </div>
 
-      <button onClick={startPractice}>Start / New Question</button>
+      <div className="practice-card">
+        <p className="practice-prompt">
+          <strong>Translate:</strong>{" "}
+          {practicePrompt || "Click 'Start / New Question to begin"}
+        </p>
+      </div>
 
-      <p>
-        <strong>Translate:</strong> {practicePrompt}
-      </p>
+      <div className="practice-input-container">
+        <input
+          className="practice-input"
+          value={practiceInput}
+          onChange={(e) => setPracticeInput(e.target.value)}
+        />
 
-      <input
-        value={practiceInput}
-        onChange={(e) => setPracticeInput(e.target.value)}
-      />
+        <button
+          className="practice-submit-button"
+          onClick={submitPractice}
+          disabled={!practicePrompt}
+        >
+          Submit
+        </button>
+      </div>
 
-      <button onClick={submitPractice}>Submit</button>
-
-      {practiceFeedback && <p>{practiceFeedback}</p>}
+      {practiceFeedback && (
+        <div className="practice-feedback">
+          <p>{practiceFeedback}</p>
+        </div>
+      )}
     </div>
   );
 };
