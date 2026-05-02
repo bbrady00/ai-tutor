@@ -15,10 +15,16 @@ function App() {
 
     const data = await res.json();
 
+    const aiText = data.reply();
+
+    const correct = aiText.split("Correct:")[1]?.split("Explanation:")[0];
+    const explanation = aiText.split("Explanation:")[1]?.split("Response:")[0];
+    const response = aiText.split("Response:")[1];
+
     setMessages([
       ...messages,
       { role: "user", content: input },
-      { role: "ai", content: data.reply },
+      { role: "ai", correct, explanation, response },
     ]);
 
     setInput("");
@@ -30,9 +36,25 @@ function App() {
 
       <div>
         {messages.map((msg, index) => (
-          <p key={index}>
-            <strong>{msg.role}:</strong> {msg.content}
-          </p>
+          <div key={index}>
+            {msg.role === "user" ? (
+              <p>
+                <strong>You:</strong> {msg.content}
+              </p>
+            ) : (
+              <div>
+                <p>
+                  <strong>✅ Correct:</strong> {msg.correct}
+                </p>
+                <p>
+                  <strong>🧠 Explanation:</strong> {msg.explanation}
+                </p>
+                <p>
+                  <strong>💬 Response:</strong> {msg.response}
+                </p>
+              </div>
+            )}
+          </div>
         ))}
       </div>
 
