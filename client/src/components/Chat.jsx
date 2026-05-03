@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles/chat.css";
 
 const Chat = () => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const messageEndRef = useRef(null);
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -60,15 +66,22 @@ const Chat = () => {
               </p>
             ) : (
               <div className="chat-response">
-                <p>
-                  <strong>Correct:</strong> {msg.correct}
-                </p>
-                <p>
-                  <strong>Explanation:</strong> {msg.explanation}
-                </p>
-                <p>
-                  <strong>Response:</strong> {msg.response}
-                </p>
+                {" "}
+                {msg.correct && (
+                  <p>
+                    <strong>Correct:</strong> {msg.correct}
+                  </p>
+                )}
+                {msg.explanation && (
+                  <p>
+                    <strong>Explanation:</strong> {msg.explanation}
+                  </p>
+                )}
+                {msg.response && (
+                  <p>
+                    <strong>Response:</strong> {msg.response}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -78,6 +91,7 @@ const Chat = () => {
             <p>Thinking...</p>
           </div>
         )}
+        <div ref={messageEndRef}></div>
       </div>
 
       <div className="chat-input-container">
@@ -85,6 +99,12 @@ const Chat = () => {
           className="chat-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !loading) {
+              sendMessage();
+            }
+          }}
+          disabled={loading}
         />
         <button
           className="chat-button"

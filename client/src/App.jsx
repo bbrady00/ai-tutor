@@ -1,29 +1,33 @@
-import { useState } from "react";
-import "./styles/app.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Chat from "./components/Chat";
 import Practice from "./components/Practice";
 import Dashboard from "./components/Dashboard";
+import "./styles/app.css";
 
 function App() {
-  const [view, setView] = useState("chat");
-
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>AI German Tutor</h1>
+    <BrowserRouter>
+      <div className="app">
+        <header className="app-header">
+          <h1>AI German Tutor</h1>
 
-        <nav className="app-nav">
-          <button onClick={() => setView("chat")}>Chat</button>
-          <button onClick={() => setView("practice")}>Practice</button>
-          <button onClick={() => setView("dashboard")}>Progress</button>
-        </nav>
-      </header>
-      <main className="app-content">
-        {view === "chat" && <Chat />}
-        {view === "practice" && <Practice />}
-        {view === "dashboard" && <Dashboard />}
-      </main>
-    </div>
+          <nav className="app-nav">
+            <a href="/chat">Chat</a>
+            <a href="/practice">Practice</a>
+            <a href="/dashboard">Progress</a>
+          </nav>
+        </header>
+
+        <main className="app-content">
+          <Routes>
+            <Route path="/" element={<Navigate to="/chat" />}></Route>
+            <Route path="/chat" element={<Chat />}></Route>
+            <Route path="/practice" element={<Practice />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 
